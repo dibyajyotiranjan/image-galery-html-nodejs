@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button >Click here</button>
+    <div id="i"><h1>This is the main page</h1></div>
+    <nav><ul>
+        <li><a href="./login.html">Login</a></li>
+        <li><a href="./post.html">Post</a></li>
+        <li><a href="./signup.html">Signup</a></li>
+    </ul></nav>
+     <div id="div"></div>
+  <script>
+      console.log("hiii");
+const container = document.getElementById("div");
+
+let limit = 2;
+let pageCount = 1;
+let postCount = 1;
+ const getPost = async()=>{
+    const response= await fetch(`http://localhost:3000/userpost?_limit=${limit}$_page=${pageCount}`);
+     const post = await response.json();
+     console.log(post);
+     post.map((curElm, index)=>{
+        const htmlData=`
+        <div class="posts">
+            <p class="post_id">
+                ${postCount++}
+            </p>
+            <h2 class="title">
+                ${curElm.text}
+            </h2>
+            <img src="./image/${curElm.pic}" alt="">
+        </div>`;
+        const DataPost = `<h1>loremfsdkacguystf7stfuisdtcuykgsukyydtukctsut
+         dcfgsatgcuyksadt
+         hjfgcuykgsaduyctsidut
+         ksagcuwdt</h1>`
+        container.insertAdjacentHTML("beforeend",htmlData+DataPost)
+     })
+ }
+ getPost();
+ const showData = ()=>{
+     setTimeout(()=>{
+         pageCount++;
+         getPost();
+     },0);
+ };
+
+
+ window.addEventListener("scroll",()=>{
+     const {scrollHeight, scrollTop, clientHeight} = document.documentElement;
+     if(scrollTop + clientHeight >= scrollHeight ){
+         console.log("i am bottom");
+         showData();
+     }
+ })
+  </script>
+    <!-- <script>
+        function my() {
+             console.log("hiii")
+        document.getElementById("i").innerHTML="hiiii   sdjakgfjsvbc jwdfuyg" ;
+            fetch("http://localhost:3000/userpost",{
+                method:"get"
+            })
+            .then(res=>res.json())
+            .then((result)=>{
+                let ttml =`<nav><ul>
+                        <li><a href="./login.html">Login</a></li>
+                        <li><a href="./post.html">Post</a></li>
+                        <li><a href="./signup.html">Signup</a></li>
+                    </ul></nav>`
+              var b=result.map(text);
+              document.write(b);
+               function text(e){
+              
+                    let html = `
+                    <h1>
+                        ${e.text}
+                        <img src="./image/${e.pic}" alt="">
+                        </h1>`
+                   return (
+                    document.getElementById("div").innerHTML=html
+                   );
+               }
+               
+        })
+    }
+        my();
+        
+
+         
+    </script> -->
+</body>
+</html>
